@@ -1,0 +1,30 @@
+textarea {
+    width: 90%;
+    height: 100px;
+}
+
+div {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    background-color: blue;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.func-buttons {
+    width: 90%;
+}
+
+.button:hover {
+    background-color: lightblue;
+}
+
+.button:active {
+    background-color: red;
+}
+
+.active {
+    background-color: green;
+}
