@@ -3,14 +3,39 @@ textarea {
     height: 100px;
 }
 
-div {
+.letters {
+    display: flex;
+    width: 1020px;
+
+}
+
+.letter {
     display: inline-block;
-    min-width: 40px;
-    height: 40px;
-    background-color: blue;
+    min-width: 30px;
+    height: 30px;
+    background-color: #888888;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
+    margin: 5px;
+    font-family: sans-serif;
+}
+
+.funck-button {
+    display: inline-block;
+    min-width: 40px;
+    height: 30px;
+    background-color: #666666;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    font-family: sans-serif;
+    flex-grow: 1;
+}
+
+.button-32 {
+    min-width: 300px;
 }
 
 .func-buttons {
@@ -27,4 +52,19 @@ div {
 
 .active {
     background-color: green;
+}
+
+.local-lang {
+    margin-top: 40px;
+}
+
+.local-lang span {
+    min-width: 20px;
+    height: 20px;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    font-family: sans-serif;
 }
