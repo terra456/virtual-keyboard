@@ -19,6 +19,7 @@ textarea {
     padding: 10px;
     margin: 5px;
     font-family: sans-serif;
+    transition: background-color 0.5s, border-radius 0.2s;
 }
 
 .funck-button {
@@ -32,6 +33,7 @@ textarea {
     margin: 5px;
     font-family: sans-serif;
     flex-grow: 1;
+    transition: background-color 0.5s, border-radius 0.2s;
 }
 
 .button-32 {
@@ -42,16 +44,25 @@ textarea {
     width: 90%;
 }
 
-.button:hover {
+.letter:hover,
+.funck-button:hover {
     background-color: lightblue;
 }
 
-.button:active {
-    background-color: red;
+.letter:active {
+    background-color: green;
+    border-radius: 50%;
 }
 
 .active {
     background-color: green;
+    border-radius: 50%;
+}
+
+.funck-button:active,
+.funck-button.active {
+    background-color: green;
+    border-radius: 30px / 50%;
 }
 
 .local-lang {
