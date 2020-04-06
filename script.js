@@ -20,8 +20,6 @@ let funcButtons = {
     40: 'ArrowDown',
     39: 'ArrowRight'};
 
-//charCode dont work it get 0 any time
-
 let arrKeyCodeFirst = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 173, 61];
 
 let serviceButtons =  [9, 20, 16, 17, 18, 32, 18, 17, 16, 13, 8, 46, 37, 38, 40, 39];
@@ -31,8 +29,6 @@ let firstLineLetters = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221];
 let secondLineLetters = [65, 83, 68, 70, 71, 72, 74, 75, 76, 59, 222];
 
 let thirdLineLetters = [ 90, 88, 67, 86, 66, 78, 77, 188, 190, 191];
-
-console.log(KeyboardEvent.shiftKey);
 
 const enLower = {
     192: '`',
@@ -179,7 +175,7 @@ const ruLower = {
     77: 'ь',
     188: 'б',
     190: 'ю',
-    190: '.'
+    191: '.'
 };
 
 const ruUpper = {
@@ -229,7 +225,7 @@ const ruUpper = {
     77: 'Ь',
     188: 'Б',
     190: 'Ю',
-    190: ','
+    191: ','
 };
 
 if (!localStorage.getItem('lang')) {
@@ -247,9 +243,6 @@ let printLetters = function (arr, parentDiv, lang) {
 
         div.className = 'button-'+String(el);
         div.classList.add('letter');
-        //div.setData(char: el);
-        //div.innerHTML = String.fromCharCode(el).toLocaleLowerCase();
-
 
         if (lang == 'ru') {
             div.textContent = ruLower[el];
@@ -285,7 +278,7 @@ var parentFirstLetters = document.createElement("div");
     document.body.append(parentFirstLetters);
     printFunckBtn(9, parentFirstLetters);
     printLetters(firstLineLetters, parentFirstLetters, lang);
-    printFunckBtn(46, parentFirstLetters);
+    //printFunckBtn(46, parentFirstLetters); //del btn
 
 var parentSecondLetters = document.createElement("div");
     parentSecondLetters.classList.add('letters');
@@ -300,7 +293,7 @@ var parentThirdLetters = document.createElement("div");
     printFunckBtn(16, parentThirdLetters);
     printLetters(thirdLineLetters, parentThirdLetters, lang);
     printFunckBtn(16, parentThirdLetters);
-    printFunckBtn(38, parentThirdLetters);
+    //printFunckBtn(38, parentThirdLetters); //arrow
 
 var parentSpaceLetters = document.createElement("div");
     parentSpaceLetters.classList.add('letters');
@@ -312,9 +305,9 @@ var parentSpaceLetters = document.createElement("div");
     printFunckBtn(18, parentSpaceLetters);
     printFunckBtn(93, parentSpaceLetters);
     printFunckBtn(17, parentSpaceLetters);
-    printFunckBtn(37, parentSpaceLetters);
-    printFunckBtn(40, parentSpaceLetters);
-    printFunckBtn(39, parentSpaceLetters);
+    //printFunckBtn(37, parentSpaceLetters); //arrows
+    //printFunckBtn(40, parentSpaceLetters);
+    //printFunckBtn(39, parentSpaceLetters);
 
 
 var parentLang = document.createElement("div");
@@ -334,7 +327,6 @@ document.addEventListener('keydown', function(event) {
         parentLang.innerHTML = '<span>' + lang + '</span> press (shift and ctrl) to change';
         changeLangLetters(lang);
         localStorage.setItem('lang', lang);
-        console.log(localStorage.getItem('lang'));
     }
 });
 
@@ -374,25 +366,32 @@ let changeCaseLetters = function(whatCase) {
                 el.textContent = enLower[elCode];
             }
         }
-        //console.log(whatCase);
 
     });
 };
 
 document.addEventListener('keydown', function(event) {
-    // event.which == 
+    // event.which ==
+    event.preventDefault();
     let current = document.querySelector('.button-'+String(event.keyCode)+'');
-    current.classList.add('active');
-    //console.log(current);
+    if (String(event.keyCode) != 20) {
+        current.classList.add('active');
+    } else {
+        current.classList.toggle('active');
+        if (current.classList.contains('active') == false) {
+            divLetter.forEach(el => {
+                el.textContent = el.textContent.toLowerCase();
+            });
 
-    if (event.shiftKey) {
-        //whatCase = 'Upper';
-        event.preventDefault();
-        changeCaseLetters('Upper');
-
+        } else {
+            divLetter.forEach(el => {
+                el.textContent = el.textContent.toUpperCase();
+            });
+        }
     }
+
     if (serviceButtons.indexOf(event.keyCode) == -1) {
-        console.log(current.textContent);
+
         textArea.value += current.textContent;
     }
     if (event.keyCode == 13) {
@@ -401,25 +400,29 @@ document.addEventListener('keydown', function(event) {
     if (event.keyCode == 32) {
         textArea.value += '\ ';
     }
+    if (event.keyCode == 9) {
+        textArea.value += '\t';
+    }
+    if (event.keyCode == 8) {
+        textArea.value = textArea.value.slice(0, -1);
+    }
+    if (event.keyCode == 16) {
+        changeCaseLetters('Upper');
+    }
+});
 
-
-
-  });
-
-  document.addEventListener('keyup', function(event) {
-    // event.which == 
+document.addEventListener('keyup', function(event) {
+    // event.which ==
+    event.preventDefault();
     let current = document.querySelector('.button-'+String(event.keyCode)+'');
-    current.classList.remove('active');
-    //console.log(event.shiftKey);
-
-
-      if (event.shiftKey == false) {
-          //whatCase = 'Lower';
-          changeCaseLetters('Lower');
-          //console.log('it work');
+      if (event.keyCode != 20) {
+          current.classList.remove('active');
       }
 
-  });
+      if (event.shiftKey) {
+          changeCaseLetters('Lower');
+      }
+});
 
 
 divLetter.forEach(el => {
@@ -433,3 +436,53 @@ divLetter.forEach(el => {
     });
 });
 
+const divFunck = document.querySelectorAll('.funck-button');
+    divFunck.forEach(el => {
+
+    let elCode = parseInt(el.className.match(/\d+/));
+
+    el.addEventListener('mousedown', function (evt) {
+        if (elCode != 20) {
+            evt.target.classList.add('active');
+        }
+        if (elCode == 13) {
+            textArea.value += '\n';
+        }
+        if (elCode == 32) {
+            textArea.value += '\ ';
+        }
+        if (elCode == 16) {
+            changeCaseLetters('Upper');
+        }
+        if (elCode == 9) {
+            textArea.value += '\t';
+        }
+        if (elCode == 8) {
+            textArea.value = textArea.value.slice(0, -1);
+        }
+
+        if (elCode == 20) {
+            el.classList.toggle('active');
+            if (el.classList.contains('active') == false) {
+                changeCaseLetters('Lower');
+            } else {
+                changeCaseLetters('Upper');
+            }
+        }
+
+    });
+
+    el.addEventListener('mouseup', function (evt) {
+        if (elCode != 20) {
+            evt.target.classList.remove('active');
+        }
+
+        if (elCode == 16) {
+            changeCaseLetters('Lower');
+        }
+        if (elCode == 20) {
+            //evt.target.classList.toggle('active');
+            //changeCaseLetters('Upper');
+        }
+    });
+});
