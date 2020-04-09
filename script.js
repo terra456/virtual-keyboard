@@ -2,7 +2,7 @@ let textArea = document.createElement('textarea');
 
 document.body.append(textArea);
 
-let funcButtons = {
+const funcButtons = {
     27: 'Esc',
     8: 'Backspase',
     9: 'Tab',
@@ -15,20 +15,27 @@ let funcButtons = {
     32: 'Space',
     13: 'Enter',
     46: 'Del',
-    37: 'ArrowLeft',
-    38: 'ArrowUp',
-    40: 'ArrowDown',
-    39: 'ArrowRight'};
+    37: '&larr;',
+    38: '&uarr;',
+    40: '&darr;',
+    39: '&rarr;'};
 
-let arrKeyCodeFirst = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 173, 61];
+const arrows = {
+    37: '←',
+    38: '↑',
+    40: '↓',
+    39: '→'
+};
 
-let serviceButtons =  [9, 20, 16, 17, 18, 32, 18, 17, 16, 13, 8, 46, 37, 38, 40, 39];
+const arrKeyCodeFirst = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 173, 61];
 
-let firstLineLetters = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221];
+const serviceButtons =  [9, 20, 16, 17, 18, 32, 18, 17, 16, 13, 8, 46, 37, 38, 40, 39];
 
-let secondLineLetters = [65, 83, 68, 70, 71, 72, 74, 75, 76, 59, 222];
+const firstLineLetters = [81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221];
 
-let thirdLineLetters = [ 90, 88, 67, 86, 66, 78, 77, 188, 190, 191];
+const secondLineLetters = [65, 83, 68, 70, 71, 72, 74, 75, 76, 59, 222];
+
+const thirdLineLetters = [ 90, 88, 67, 86, 66, 78, 77, 188, 190, 191];
 
 const enLower = {
     192: '`',
@@ -293,7 +300,7 @@ var parentThirdLetters = document.createElement("div");
     printFunckBtn(16, parentThirdLetters);
     printLetters(thirdLineLetters, parentThirdLetters, lang);
     printFunckBtn(16, parentThirdLetters);
-    //printFunckBtn(38, parentThirdLetters); //arrow
+    printFunckBtn(38, parentThirdLetters);
 
 var parentSpaceLetters = document.createElement("div");
     parentSpaceLetters.classList.add('letters');
@@ -305,15 +312,20 @@ var parentSpaceLetters = document.createElement("div");
     printFunckBtn(18, parentSpaceLetters);
     printFunckBtn(93, parentSpaceLetters);
     printFunckBtn(17, parentSpaceLetters);
-    //printFunckBtn(37, parentSpaceLetters); //arrows
-    //printFunckBtn(40, parentSpaceLetters);
-    //printFunckBtn(39, parentSpaceLetters);
+    printFunckBtn(37, parentSpaceLetters);
+    printFunckBtn(40, parentSpaceLetters);
+    printFunckBtn(39, parentSpaceLetters);
 
 
 var parentLang = document.createElement("div");
     parentLang.classList.add('local-lang');
     parentLang.innerHTML = '<span>' + lang + '</span> press (shift and ctrl) to change';
     document.body.append(parentLang);
+
+var osInfo = document.createElement("div");
+osInfo.classList.add('local-lang');
+osInfo.innerHTML = 'developed in OS Ubuntu Linux';
+document.body.append(osInfo);
 
 
 document.addEventListener('keydown', function(event) {
@@ -343,8 +355,6 @@ let changeLangLetters = function(lang) {
         } else if (lang == 'en') {
             el.textContent = enLower[elCode];
         }
-        //el.textContent = enLower[elCode];
-
     });
 };
 
@@ -371,7 +381,6 @@ let changeCaseLetters = function(whatCase) {
 };
 
 document.addEventListener('keydown', function(event) {
-    // event.which ==
     event.preventDefault();
     let current = document.querySelector('.button-'+String(event.keyCode)+'');
     if (String(event.keyCode) != 20) {
@@ -409,10 +418,13 @@ document.addEventListener('keydown', function(event) {
     if (event.keyCode == 16) {
         changeCaseLetters('Upper');
     }
+    if (event.keyCode >= 37 && event.keyCode <=40) {
+        textArea.value += arrows[event.keyCode];
+
+    }
 });
 
 document.addEventListener('keyup', function(event) {
-    // event.which ==
     event.preventDefault();
     let current = document.querySelector('.button-'+String(event.keyCode)+'');
       if (event.keyCode != 20) {
@@ -469,6 +481,10 @@ const divFunck = document.querySelectorAll('.funck-button');
                 changeCaseLetters('Upper');
             }
         }
+        if (elCode >= 37 && elCode <=40) {
+            textArea.value += arrows[elCode];
+
+        }
 
     });
 
@@ -480,9 +496,6 @@ const divFunck = document.querySelectorAll('.funck-button');
         if (elCode == 16) {
             changeCaseLetters('Lower');
         }
-        if (elCode == 20) {
-            //evt.target.classList.toggle('active');
-            //changeCaseLetters('Upper');
-        }
+
     });
 });
