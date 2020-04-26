@@ -1,6 +1,12 @@
+body {
+    width: 1020px;
+    margin: 20px auto;
+}
+
 textarea {
     width: 1020px;
-    height: 100px;
+    height: 30vh;
+    margin-bottom: 20px;
 }
 
 .letters {

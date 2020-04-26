@@ -235,34 +235,32 @@ const ruUpper = {
     191: ','
 };
 
+let lang = localStorage.getItem('lang');
 if (!localStorage.getItem('lang')) {
-    var lang = 'en';
-} else {
-    var lang = localStorage.getItem('lang');
-
+    lang = 'en';
 }
 
-let printLetters = function (arr, parentDiv, lang) {
+function printLetters (arr, parentDiv, lang) {
     for (let i = 0; i < arr.length; i++) {
         const el = arr[i];
 
-        var div = document.createElement("div");
+        let div = document.createElement("div");
 
         div.className = 'button-'+String(el);
         div.classList.add('letter');
 
         if (lang == 'ru') {
-            div.textContent = ruLower[el];
+                div.textContent = ruLower[el];
             } else if (lang == 'en') {
-            div.textContent = enLower[el];
+                div.textContent = enLower[el];
             }
 
         parentDiv.append(div);
     }
-};
+}
 
-let printFunckBtn = function (charBtn, parentDiv) {
-    var div = document.createElement("div");
+function printFuncBtn (charBtn, parentDiv) {
+    let div = document.createElement("div");
 
         div.className = 'button-'+charBtn;
         div.classList.add('funck-button');
@@ -270,62 +268,59 @@ let printFunckBtn = function (charBtn, parentDiv) {
 
         parentDiv.append(div);
 
-};
+}
 
-
-
-var parentDec = document.createElement("div");
+const parentDec = document.createElement("div");
     parentDec.classList.add('letters');
     document.body.append(parentDec);
     printLetters(arrKeyCodeFirst, parentDec, lang);
-    printFunckBtn(8, parentDec);
+    printFuncBtn(8, parentDec);
 
-var parentFirstLetters = document.createElement("div");
+const parentFirstLetters = document.createElement("div");
     parentFirstLetters.classList.add('letters');
     document.body.append(parentFirstLetters);
-    printFunckBtn(9, parentFirstLetters);
+    printFuncBtn(9, parentFirstLetters);
     printLetters(firstLineLetters, parentFirstLetters, lang);
-    //printFunckBtn(46, parentFirstLetters); //del btn
+    //printFuncBtn(46, parentFirstLetters); //del btn
 
-var parentSecondLetters = document.createElement("div");
+const parentSecondLetters = document.createElement("div");
     parentSecondLetters.classList.add('letters');
     document.body.append(parentSecondLetters);
-    printFunckBtn(20, parentSecondLetters);
+    printFuncBtn(20, parentSecondLetters);
     printLetters(secondLineLetters, parentSecondLetters, lang);
-    printFunckBtn(13, parentSecondLetters);
+    printFuncBtn(13, parentSecondLetters);
 
-var parentThirdLetters = document.createElement("div");
+const parentThirdLetters = document.createElement("div");
     parentThirdLetters.classList.add('letters');
     document.body.append(parentThirdLetters);
-    printFunckBtn(16, parentThirdLetters);
+    printFuncBtn(16, parentThirdLetters);
     printLetters(thirdLineLetters, parentThirdLetters, lang);
-    printFunckBtn(16, parentThirdLetters);
-    printFunckBtn(38, parentThirdLetters);
+    printFuncBtn(16, parentThirdLetters);
+    printFuncBtn(38, parentThirdLetters);
 
-var parentSpaceLetters = document.createElement("div");
+const parentSpaceLetters = document.createElement("div");
     parentSpaceLetters.classList.add('letters');
     document.body.append(parentSpaceLetters);
-    printFunckBtn(17, parentSpaceLetters);
-    printFunckBtn(91, parentSpaceLetters);
-    printFunckBtn(18, parentSpaceLetters);
-    printFunckBtn(32, parentSpaceLetters);
-    printFunckBtn(18, parentSpaceLetters);
-    printFunckBtn(93, parentSpaceLetters);
-    printFunckBtn(17, parentSpaceLetters);
-    printFunckBtn(37, parentSpaceLetters);
-    printFunckBtn(40, parentSpaceLetters);
-    printFunckBtn(39, parentSpaceLetters);
+    printFuncBtn(17, parentSpaceLetters);
+    printFuncBtn(91, parentSpaceLetters);
+    printFuncBtn(18, parentSpaceLetters);
+    printFuncBtn(32, parentSpaceLetters);
+    printFuncBtn(18, parentSpaceLetters);
+    printFuncBtn(93, parentSpaceLetters);
+    printFuncBtn(17, parentSpaceLetters);
+    printFuncBtn(37, parentSpaceLetters);
+    printFuncBtn(40, parentSpaceLetters);
+    printFuncBtn(39, parentSpaceLetters);
 
-
-var parentLang = document.createElement("div");
+const parentLang = document.createElement("div");
     parentLang.classList.add('local-lang');
     parentLang.innerHTML = '<span>' + lang + '</span> press (shift and ctrl) to change';
     document.body.append(parentLang);
 
-var osInfo = document.createElement("div");
-osInfo.classList.add('local-lang');
-osInfo.innerHTML = 'developed in OS Ubuntu Linux';
-document.body.append(osInfo);
+const osInfo = document.createElement("div");
+    osInfo.classList.add('local-lang');
+    osInfo.innerHTML = 'developed in OS Ubuntu Linux';
+    document.body.append(osInfo);
 
 
 document.addEventListener('keydown', function(event) {
@@ -344,50 +339,53 @@ document.addEventListener('keydown', function(event) {
 
 const divLetter = document.querySelectorAll('.letter');
 
-let changeLangLetters = function(lang) {
+function changeLangLetters (lang) {
 
     divLetter.forEach(el => {
         let elClassName = el.className;
         let elCode = parseInt(elClassName.match(/\d+/));
 
-        if (lang == 'ru') {
+        if (lang === 'ru') {
             el.textContent = ruLower[elCode];
-        } else if (lang == 'en') {
+        } else if (lang === 'en') {
             el.textContent = enLower[elCode];
         }
     });
-};
+}
 
-let changeCaseLetters = function(whatCase) {
+function changeCaseLetters (whatCase) {
 
     divLetter.forEach(el => {
         let elClassName = el.className;
         let elCode = parseInt(elClassName.match(/\d+/));
         if (whatCase === 'Upper') {
-            if (lang == 'ru') {
+            if (lang === 'ru') {
                 el.textContent = ruUpper[elCode];
-            } else if (lang == 'en') {
+            } else if (lang === 'en') {
                 el.textContent = enUpper[elCode];
             }
         } else if (whatCase === 'Lower') {
-            if (lang == 'ru') {
+            if (lang === 'ru') {
                 el.textContent = ruLower[elCode];
-            } else if (lang == 'en') {
+            } else if (lang === 'en') {
                 el.textContent = enLower[elCode];
             }
         }
 
     });
-};
+}
 
 document.addEventListener('keydown', function(event) {
-    event.preventDefault();
+    if (event.keyCode<112 || event.keyCode>123) {
+        event.preventDefault();
+    }
+
     let current = document.querySelector('.button-'+String(event.keyCode)+'');
     if (String(event.keyCode) != 20) {
         current.classList.add('active');
     } else {
         current.classList.toggle('active');
-        if (current.classList.contains('active') == false) {
+        if (current.classList.contains('active') === false) {
             divLetter.forEach(el => {
                 el.textContent = el.textContent.toLowerCase();
             });
@@ -399,28 +397,20 @@ document.addEventListener('keydown', function(event) {
         }
     }
 
-    if (serviceButtons.indexOf(event.keyCode) == -1) {
-
+    if (serviceButtons.indexOf(event.keyCode) === -1) {
         textArea.value += current.textContent;
-    }
-    if (event.keyCode == 13) {
+    } else if (event.keyCode == 13) {
         textArea.value += '\n';
-    }
-    if (event.keyCode == 32) {
+    } else if (event.keyCode == 32) {
         textArea.value += '\ ';
-    }
-    if (event.keyCode == 9) {
+    } else if (event.keyCode == 9) {
         textArea.value += '\t';
-    }
-    if (event.keyCode == 8) {
+    } else if (event.keyCode == 8) {
         textArea.value = textArea.value.slice(0, -1);
-    }
-    if (event.keyCode == 16) {
+    } else if (event.keyCode == 16) {
         changeCaseLetters('Upper');
-    }
-    if (event.keyCode >= 37 && event.keyCode <=40) {
+    } else if (event.keyCode >= 37 && event.keyCode <=40) {
         textArea.value += arrows[event.keyCode];
-
     }
 });
 
@@ -456,34 +446,25 @@ const divFunck = document.querySelectorAll('.funck-button');
     el.addEventListener('mousedown', function (evt) {
         if (elCode != 20) {
             evt.target.classList.add('active');
-        }
-        if (elCode == 13) {
+        } else if (elCode == 13) {
             textArea.value += '\n';
-        }
-        if (elCode == 32) {
+        } else if (elCode == 32) {
             textArea.value += '\ ';
-        }
-        if (elCode == 16) {
+        } else if (elCode == 16) {
             changeCaseLetters('Upper');
-        }
-        if (elCode == 9) {
+        } else if (elCode == 9) {
             textArea.value += '\t';
-        }
-        if (elCode == 8) {
+        } else if (elCode == 8) {
             textArea.value = textArea.value.slice(0, -1);
-        }
-
-        if (elCode == 20) {
+        } else if (elCode == 20) {
             el.classList.toggle('active');
-            if (el.classList.contains('active') == false) {
+            if (el.classList.contains('active') === false) {
                 changeCaseLetters('Lower');
             } else {
                 changeCaseLetters('Upper');
             }
-        }
-        if (elCode >= 37 && elCode <=40) {
+        } else if (elCode >= 37 && elCode <=40) {
             textArea.value += arrows[elCode];
-
         }
 
     });
